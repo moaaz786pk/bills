@@ -3,29 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyBill - Professional Billing System</title>
+    <title>Bhandari Billing System - Secure Access</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden; /* Scroll bar hide karne ke liye */
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f0f2f5; }
+        #billing-content { 
+            border: 2px solid #ddd; 
+            padding: 20px; 
+            background: white; 
+            min-height: 500px;
+            border-radius: 8px;
         }
-        iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        .loading { color: blue; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <iframe src="http://bit.ly/45WEB2n" title="Billing System">
-        Your browser does not support iframes. Please update your browser.
-    </iframe>
+    <h2>Bhandari & Sons Billing Portal</h2>
+    <hr>
+    
+    <div id="billing-content">
+        <p class="loading">Please wait, loading system from secure server...</p>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                // Aapki asli site ka URL
+                url: 'https://bills.42web.io/english.php', 
+                type: 'GET',
+                crossDomain: true,
+                success: function(response) {
+                    // Agar data aa jaye toh loading text hata kar data dalien
+                    $('#billing-content').html(response);
+                },
+                error: function(xhr, status, error) {
+                    // Agar block ho jaye toh ye error dikhaye ga
+                    $('#billing-content').html(
+                        '<p class="error">Error: Could not connect to the server. <br>' +
+                        'Reason: ' + error + '<br><br>' +
+                        'Please <a href="http://bills.42web.io/english.php">Click Here</a> to open directly.</p>'
+                    );
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
